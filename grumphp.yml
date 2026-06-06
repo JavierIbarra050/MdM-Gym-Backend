@@ -1,0 +1,32 @@
+grumphp:
+  parallel:
+    enabled: true
+    max_workers: 4
+  tasks:
+    # 1. No permite subir si no pasan los tests
+    phpunit:
+      config_file: phpunit.xml
+      always_execute: true
+
+    # 2. Formato de Ramas: numeroIssue-descripcion-rama (Ej: 123-login-fix)
+    git_branch_name:
+      whitelist:
+        - "/^\\d+-[a-z0-9-]+$/"
+
+    # 3. Formato de Commits: [#numeroIssue] - Descripcion issue
+    git_commit_message:
+      allow_empty_message: false
+      matchers:
+        - "/^\\[#\\d+\\]\\s-\\s.+/"
+
+    # 4. Evitar basura en el código
+    git_blacklist:
+      keywords: ["die(", "var_dump(", "exit;", "dd("]
+      triggered_by: [php]
+
+    # 5. CamelCase y estándares (Usando Pint)
+    shell:
+      scripts:
+        pint: ["-c", "php vendor/bin/pint --test"]
+      triggered_by: [php]
+
