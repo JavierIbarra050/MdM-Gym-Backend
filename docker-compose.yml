@@ -1,0 +1,48 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: mdm-gym-backend
+    container_name: mdm-app
+    restart: unless-stopped
+    working_dir: /var/www/html
+    volumes:
+      - ./:/var/www/html
+    networks:
+      - mdm-network
+
+  nginx:
+    image: nginx:alpine
+    container_name: mdm-nginx
+    restart: unless-stopped
+    ports:
+      - "8000:80"
+    volumes:
+      - ./:/var/www/html
+      - ./docker/nginx/conf.d/:/etc/nginx/conf.d/
+    depends_on:
+      - app
+    networks:
+      - mdm-network
+
+  db:
+    image: mysql:8.0
+    container_name: mdm-db
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: mdm_gym
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_PASSWORD: root
+      MYSQL_USER: mdm_user
+    volumes:
+      - mdm-db-data:/var/lib/mysql
+    networks:
+      - mdm-network
+
+networks:
+  mdm-network:
+    driver: bridge
+
+volumes:
+  mdm-db-data:
