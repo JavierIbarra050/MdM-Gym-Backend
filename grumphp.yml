@@ -16,6 +16,8 @@ grumphp:
     # 3. Formato de Commits: [#numeroIssue] - Descripcion issue
     git_commit_message:
       allow_empty_message: false
+      case_insensitive: true
+      enforce_capitalized_subject: false
       matchers:
         - "/^\\[#\\d+\\]\\s-\\s.+/"
 
