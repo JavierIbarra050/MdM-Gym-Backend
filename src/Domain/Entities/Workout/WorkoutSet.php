@@ -1,6 +1,6 @@
 <?php
 
-namespace Src\Domain\Dashboard\Workout;
+namespace Src\Domain\Entities\Workout;
 
 class WorkoutSet
 {

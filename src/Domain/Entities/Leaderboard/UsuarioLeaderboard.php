@@ -1,11 +1,13 @@
 <?php
 
-namespace Src\Domain;
+namespace Src\Domain\Entities\Leaderboard;
 
 class UsuarioLeaderboard
 {
     private string $username;
+
     private float $score;
+
     private int $position;
 
     public function __construct(string $username, float $score, int $position)
@@ -15,7 +17,18 @@ class UsuarioLeaderboard
         $this->position = $position;
     }
 
-    public function getUsername(): string { return $this->username; }
-    public function getScore(): float { return $this->score; }
-    public function getPosition(): int { return $this->position; }
+    public function getUsername(): string
+    {
+        return $this->username;
+    }
+
+    public function getScore(): float
+    {
+        return $this->score;
+    }
+
+    public function getPosition(): int
+    {
+        return $this->position;
+    }
 }

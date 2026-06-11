@@ -1,6 +1,6 @@
 <?php
 
-namespace Src\Domain\Dashboard\Leaderboard;
+namespace Src\Domain\Entities\Leaderboard;
 
 class Leaderboard
 {
@@ -16,9 +16,6 @@ class Leaderboard
         return $this->usuariosLeaderboard;
     }
 
-    /**
-     * Lógica de dominio: por ejemplo, obtener el espartano que va ganando
-     */
     public function getLeader(): ?UsuarioLeaderboard
     {
         return $this->usuariosLeaderboard[0] ?? null;
