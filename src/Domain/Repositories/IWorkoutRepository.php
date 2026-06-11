@@ -3,6 +3,7 @@
 namespace Src\Domain\Repositories;
 
 use Src\Domain\Entities\Workout\Workout;
+use Src\Domain\Entities\Workout\WorkoutSet;
 
 interface IWorkoutRepository
 {
