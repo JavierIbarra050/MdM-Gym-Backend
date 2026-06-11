@@ -68,7 +68,16 @@ class ChallengeRepositoryDB implements IChallengeRepository
 
     public function saveContribution(int $challengeId, int $userId, float $weight): void
     {
-        // Se implementará en la sub-issue #63
+        DB::insert(
+            'INSERT INTO challenge_contributions (challenge_id, user_id, weight, created_at, updated_at) VALUES (?, ?, ?, ?, ?)',
+            [
+                $challengeId,
+                $userId,
+                $weight,
+                now(),
+                now(),
+            ]
+        );
     }
 
     public function getLeaderboard(int $challengeId, int $limit): Leaderboard
