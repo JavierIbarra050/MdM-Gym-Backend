@@ -11,4 +11,6 @@ interface IWorkoutRepository
     public function findActiveByUserId(int $userId): ?Workout;
 
     public function save(Workout $workout): void;
+
+    public function saveSet(int $workoutId, WorkoutSet $set): void;
 }
