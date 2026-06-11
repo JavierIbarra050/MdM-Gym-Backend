@@ -7,10 +7,12 @@ use Src\Domain\Repositories\IAnalyticsRepository;
 use Src\Domain\Repositories\IChallengeRepository;
 use Src\Domain\Repositories\IExerciseRepository;
 use Src\Domain\Repositories\IWorkoutRepository;
+use Src\Domain\Repositories\IWorkoutSetRepository;
 use Src\Infrastructure\Repositories\AnalyticsRepositoryDB;
 use Src\Infrastructure\Repositories\ChallengeRepositoryDB;
 use Src\Infrastructure\Repositories\ExerciseRepositoryDB;
 use Src\Infrastructure\Repositories\WorkoutRepositoryDB;
+use Src\Infrastructure\Repositories\WorkoutSetRepositoryDB;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -34,6 +36,11 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(
             IExerciseRepository::class,
             ExerciseRepositoryDB::class
+        );
+
+        $this->app->bind(
+            IWorkoutSetRepository::class,
+            WorkoutSetRepositoryDB::class
         );
     }
 
