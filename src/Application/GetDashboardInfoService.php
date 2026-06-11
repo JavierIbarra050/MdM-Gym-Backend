@@ -36,7 +36,7 @@ class GetDashboardInfoService
                 'description' => $activeChallenge->getDescription(),
                 'percentage' => $activeChallenge->getCurrentPercentage(),
             ] : null,
-            'leaderboard' => $leaderboard ? $leaderboard->getRows() : [],
+            'leaderboard' => $leaderboard ? array_map(fn ($row) => $row->toArray(), $leaderboard->getRows()) : [],
             'feed' => $feedWorkouts,
         ];
     }
