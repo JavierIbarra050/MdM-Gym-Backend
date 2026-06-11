@@ -5,6 +5,7 @@ namespace Src\Infrastructure\Repositories;
 use Illuminate\Support\Facades\DB;
 use Src\Domain\Entities\Challenge\Challenge;
 use Src\Domain\Entities\Leaderboard\Leaderboard;
+use Src\Domain\Entities\Leaderboard\UsuarioLeaderboard;
 use Src\Domain\Repositories\IChallengeRepository;
 
 class ChallengeRepositoryDB implements IChallengeRepository
@@ -82,6 +83,26 @@ class ChallengeRepositoryDB implements IChallengeRepository
 
     public function getLeaderboard(int $challengeId, int $limit): Leaderboard
     {
-        return new Leaderboard([]);
+        $leaderboardData = DB::select(
+            'SELECT u.name as username, SUM(cc.weight) as total_score 
+             FROM challenge_contributions cc 
+             JOIN users u ON cc.user_id = u.id 
+             WHERE cc.challenge_id = ? 
+             GROUP BY cc.user_id, u.name 
+             ORDER BY total_score DESC 
+             LIMIT ?',
+            [$challengeId, $limit]
+        );
+
+        $rows = [];
+        foreach ($leaderboardData as $index => $data) {
+            $rows[] = new UsuarioLeaderboard(
+                (string) $data->username,
+                (float) $data->total_score,
+                $index + 1
+            );
+        }
+
+        return new Leaderboard($rows);
     }
 }
