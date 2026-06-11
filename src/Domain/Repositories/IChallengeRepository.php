@@ -7,9 +7,13 @@ use Src\Domain\Entities\Leaderboard\Leaderboard;
 
 interface IChallengeRepository
 {
+    public function findById(int $id): ?Challenge;
+
     public function findActiveChallenge(): ?Challenge;
 
     public function updateChallenge(Challenge $challenge): void;
+
+    public function saveContribution(int $challengeId, int $userId, float $weight): void;
 
     public function getLeaderboard(int $challengeId, int $limit): Leaderboard;
 }
