@@ -31,4 +31,3 @@ grumphp:
       scripts:
         pint: ["-c", "php vendor/bin/pint --test"]
       triggered_by: [php]
-
