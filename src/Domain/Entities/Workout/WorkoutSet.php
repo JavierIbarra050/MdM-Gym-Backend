@@ -2,6 +2,8 @@
 
 namespace Src\Domain\Entities\Workout;
 
+use Exception;
+
 class WorkoutSet
 {
     private int $id;
@@ -51,5 +53,39 @@ class WorkoutSet
     public function isCompleted(): bool
     {
         return $this->isCompleted;
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function updateValues(float $weight, int $reps): void
+    {
+        if ($weight < 0 || $reps < 0) {
+            throw new Exception('Los kilos y las repeticiones no pueden ser valores negativos.');
+        }
+
+        $this->weight = $weight;
+        $this->reps = $reps;
+    }
+
+    public function markAsComplete(): void
+    {
+        $this->isCompleted = true;
+    }
+
+    public function markAsIncomplete(): void
+    {
+        $this->isCompleted = false;
+    }
+
+    public function toArray(): array
+    {
+        return [
+            'id' => $this->id,
+            'exercise_name' => $this->exerciseName,
+            'weight' => $this->weight,
+            'reps' => $this->reps,
+            'is_completed' => $this->isCompleted,
+        ];
     }
 }
