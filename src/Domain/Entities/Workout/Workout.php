@@ -93,6 +93,20 @@ class Workout
         $this->sets[] = $set;
     }
 
+    public function addExercise(string $exerciseName): void
+    {
+        // Al añadir un ejercicio, simplemente añadimos la primera serie con valores a cero
+        // El ID es 0 porque es una entidad nueva que aún no está en la DB
+        $this->addSet(new WorkoutSet(0, $exerciseName, 0.0, 0));
+    }
+
+    public function addSetToExercise(string $exerciseName): void
+    {
+        // Buscamos si ya existe el ejercicio para copiar el nombre exacto si fuera necesario
+        // aunque aquí simplemente añadimos otra serie con el mismo nombre.
+        $this->addSet(new WorkoutSet(0, $exerciseName, 0.0, 0));
+    }
+
     public function getTotalVolume(): float
     {
         $volume = 0.0;
