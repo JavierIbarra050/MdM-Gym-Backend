@@ -108,4 +108,23 @@ class WorkoutRepositoryDB implements IWorkoutRepository
             );
         }
     }
+
+    /**
+     * @SuppressWarnings(PHPMD.StaticAccess)
+     */
+    public function saveSet(int $workoutId, WorkoutSet $set): void
+    {
+        DB::insert(
+            'INSERT INTO workout_sets (workout_id, exercise_name, weight, reps, is_completed, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?)',
+            [
+                $workoutId,
+                $set->getExerciseName(),
+                $set->getWeight(),
+                $set->getReps(),
+                $set->isCompleted() ? 1 : 0,
+                now(),
+                now(),
+            ]
+        );
+    }
 }
