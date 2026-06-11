@@ -17,7 +17,7 @@ class GetActiveWorkoutService
     {
         $activeWorkout = $this->repository->findActiveByUserId($userId);
 
-        if (!$activeWorkout) {
+        if (! $activeWorkout) {
             return null;
         }
 

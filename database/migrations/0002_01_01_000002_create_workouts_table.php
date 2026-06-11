@@ -16,6 +16,8 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->string('status')->default('IN_PROGRESS'); // IN_PROGRESS, COMPLETED
             $table->timestamp('date')->useCurrent();
+            $table->timestamp('start_time')->nullable();
+            $table->timestamp('end_time')->nullable();
             $table->timestamps();
         });
     }
