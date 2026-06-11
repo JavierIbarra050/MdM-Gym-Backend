@@ -1,6 +1,6 @@
 <?php
 
-namespace Src\Domain\Dashboard\Challenge;
+namespace Src\Domain\Entities\Challenge;
 
 class Challenge
 {
