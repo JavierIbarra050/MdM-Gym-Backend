@@ -31,4 +31,13 @@ class UsuarioLeaderboard
     {
         return $this->position;
     }
+
+    public function toArray(): array
+    {
+        return [
+            'username' => $this->username,
+            'score' => $this->score,
+            'position' => $this->position,
+        ];
+    }
 }

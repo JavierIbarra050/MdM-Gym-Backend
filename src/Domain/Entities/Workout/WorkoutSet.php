@@ -8,20 +8,24 @@ class WorkoutSet
 
     private string $exerciseName;
 
-    private int $weight;
+    private float $weight;
 
     private int $reps;
+
+    private bool $isCompleted;
 
     public function __construct(
         int $id,
         string $exerciseName,
-        int $weight,
-        int $reps)
-    {
+        float $weight,
+        int $reps,
+        bool $isCompleted = false
+    ) {
         $this->id = $id;
         $this->exerciseName = $exerciseName;
         $this->weight = $weight;
         $this->reps = $reps;
+        $this->isCompleted = $isCompleted;
     }
 
     public function getId(): int
@@ -34,7 +38,7 @@ class WorkoutSet
         return $this->exerciseName;
     }
 
-    public function getWeight(): int
+    public function getWeight(): float
     {
         return $this->weight;
     }
@@ -42,5 +46,10 @@ class WorkoutSet
     public function getReps(): int
     {
         return $this->reps;
+    }
+
+    public function isCompleted(): bool
+    {
+        return $this->isCompleted;
     }
 }
