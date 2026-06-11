@@ -2,7 +2,13 @@
 
 namespace Src\Domain\Repositories;
 
+use Src\Domain\Entities\Workout\Workout;
+
 interface IWorkoutRepository
 {
     public function getLatestCompletedWorkouts(int $limit): array;
+
+    public function findActiveByUserId(int $userId): ?Workout;
+
+    public function save(Workout $workout): void;
 }
