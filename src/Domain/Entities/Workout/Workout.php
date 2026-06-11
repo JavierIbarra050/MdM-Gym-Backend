@@ -3,6 +3,7 @@
 namespace Src\Domain\Entities\Workout;
 
 use DateTimeImmutable;
+use Exception;
 
 class Workout
 {
@@ -14,6 +15,10 @@ class Workout
 
     private DateTimeImmutable $date;
 
+    private ?DateTimeImmutable $startTime;
+
+    private ?DateTimeImmutable $endTime;
+
     /** @var WorkoutSet[] */
     private array $sets;
 
@@ -22,12 +27,16 @@ class Workout
         int $userId,
         string $status,
         DateTimeImmutable $date,
+        ?DateTimeImmutable $startTime = null,
+        ?DateTimeImmutable $endTime = null,
         array $sets = []
     ) {
         $this->id = $id;
         $this->userId = $userId;
         $this->status = $status;
         $this->date = $date;
+        $this->startTime = $startTime;
+        $this->endTime = $endTime;
         $this->sets = $sets;
     }
 
@@ -46,14 +55,42 @@ class Workout
         return $this->date;
     }
 
+    public function getStatus(): string
+    {
+        return $this->status;
+    }
+
+    public function getStartTime(): ?DateTimeImmutable
+    {
+        return $this->startTime;
+    }
+
+    public function getEndTime(): ?DateTimeImmutable
+    {
+        return $this->endTime;
+    }
+
     public function getSets(): array
     {
         return $this->sets;
     }
 
-    public function getStatus(): string
+    /**
+     * @throws Exception
+     */
+    public function finish(): void
     {
-        return $this->status;
+        if ($this->status === 'COMPLETED') {
+            throw new Exception('El entrenamiento ya ha sido finalizado.');
+        }
+
+        $this->status = 'COMPLETED';
+        $this->endTime = new DateTimeImmutable;
+    }
+
+    public function addSet(WorkoutSet $set): void
+    {
+        $this->sets[] = $set;
     }
 
     public function getTotalVolume(): float
@@ -66,5 +103,19 @@ class Workout
         }
 
         return $volume;
+    }
+
+    public function toArray(): array
+    {
+        return [
+            'id' => $this->id,
+            'user_id' => $this->userId,
+            'status' => $this->status,
+            'date' => $this->date->format('Y-m-d H:i:s'),
+            'start_time' => $this->startTime ? $this->startTime->format('Y-m-d H:i:s') : null,
+            'end_time' => $this->endTime ? $this->endTime->format('Y-m-d H:i:s') : null,
+            'sets' => array_map(fn ($set) => $set->toArray(), $this->sets),
+            'total_volume' => $this->getTotalVolume(),
+        ];
     }
 }
